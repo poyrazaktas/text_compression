@@ -43,6 +43,8 @@ static inline void lz77memcpy(char *s1, char *s2, int size)
         *s1++ = *s2++;
 }
 
+
+
 /*
 * token array'ini, karakter array'ine dönüştürür.
 */
@@ -113,13 +115,14 @@ static struct token *encode(char *text, int limit, int *numTokens)
             max_len = text + limit - tampon_ileri - 1;
         }
 
-        //printf("Lookahead: %s\n",lookahead);
+        printf("ileri tampon: %s\n",tampon_ileri);
         // bulunan eşleşmeye göre token oluştur.
         t.offset_len = OFFSETLENGTH(tampon_ileri - max_match-1, max_len);
         printf("###: %d %d %c\n",tampon_ileri-max_match,max_len,tampon_ileri[max_len]);
         tampon_ileri += max_len;
+
         t.c = *tampon_ileri;
-        //printf("%c",t.c);
+
         // gerekirse, hafızada yer aç
         if (_numTokens + 1 > cap)
         {
@@ -151,7 +154,16 @@ static char *file_read(FILE *f, int *size)
     fread(content, 1, *size, f);
     return content;
 }
-
+int karakter_sayisi(FILE *f )
+{
+    f=fopen("source.txt","r");
+    int count=0;
+    char c;
+    for(c=getc(f);c!=EOF;c=getc(f))
+        count++;
+    fclose(f);
+    return count;
+}
 int main(void)
 {
     FILE *f;
@@ -166,7 +178,7 @@ int main(void)
     }
 
 
-
+    kaynak_metin[karakter_sayisi(f)]='\0';
     encoded_metin = encode(kaynak_metin, metin_boyutu, &token_sayisi);
 
     if (f = fopen("encoded.txt", "wb"))
