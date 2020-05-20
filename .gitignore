@@ -1,5 +1,10 @@
 LZ77.cbp
 LZ77.depend
 LZ77.layout
+encoded.txt
+HUFFMANencoded.txt
+huffmanrak.txt
+huffmans.txt
+LZ77encoded.txt
 bin/*
 obj/*
